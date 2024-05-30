@@ -24,48 +24,26 @@ const MainNav = () => {
             About
           </Button>
         </Link>
-        {/* FOR SIGN IN BUTTONS */}
-        <NavigationMenu>
-          <NavigationMenuList className="bg-red-700">
-            <NavigationMenuItem className="bg-red-700">
-              <NavigationMenuTrigger className="bg-red-700 hover:bg-red-600">
-                Sign In
-              </NavigationMenuTrigger>
-              <NavigationMenuContent className="bg-red-700 border-red-700">
-                <NavigationMenuLink>
-                  <Link href="/teacher-sign-in">
-                    <Button className=" bg-orange-600 hover:bg-red-600 hover:text-white">
-                      For Teachers
-                    </Button>
-                  </Link>
-                  <Link href="/sign-in">
-                    <Button className="bg-red-700 hover:bg-red-600 hover:text-white">
-                      For Students
-                    </Button>
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
 
         {/* FOR SIGN UP BUTTONS */}
         <NavigationMenu>
           <NavigationMenuList className="bg-red-700">
             <NavigationMenuItem className="bg-red-700">
-              <NavigationMenuTrigger className="bg-red-700 hover:bg-red-600">
-                Sign Up
+              <NavigationMenuTrigger className="bg-red-500 hover:bg-red-600">
+                Start Now
               </NavigationMenuTrigger>
-              <NavigationMenuContent className="bg-red-700 border-purple-700">
+              <NavigationMenuContent className="bg-red-700">
                 <NavigationMenuLink>
-                  <Link href="/teacher-sign-up">
-                    <Button className=" bg-orange-600 hover:bg-red-600 hover:text-white">
-                      For Teachers
+                  <Link href="/sign-in">
+                    <Button className="bg-red-700 hover:bg-orange-600 hover:text-white">
+                      Sign In
                     </Button>
                   </Link>
+                </NavigationMenuLink>
+                <NavigationMenuLink>
                   <Link href="/sign-up">
-                    <Button className="bg-red-700 hover:bg-red-600 hover:text-white">
-                      For Students
+                    <Button className="bg-red-700 hover:bg-orange-600 hover:text-white">
+                      Sign Up
                     </Button>
                   </Link>
                 </NavigationMenuLink>

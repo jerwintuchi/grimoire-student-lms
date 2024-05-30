@@ -11,7 +11,7 @@ const UnauthorizedPage = () => {
       <MainNav />
 
       {/* Unauthorized Page Content */}
-      <div className="bg-yellow-200 h-[calc(100vh-72px)] text-purple-700 flex flex-col justify-center items-center">
+      <div className="bg-black h-[calc(100vh-72px)] text-white flex flex-col justify-center items-center">
         <Image
           width={50} // specify the width of the image
           height={50} // specify the height of the image
@@ -25,7 +25,7 @@ const UnauthorizedPage = () => {
           for.
         </p>
         <Link href="/landing">
-          <button className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+          <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
             <SignOutButton redirectUrl="/sign-in">Sign in again</SignOutButton>
           </button>
         </Link>
