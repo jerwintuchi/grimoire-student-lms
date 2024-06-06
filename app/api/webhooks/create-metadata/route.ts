@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 import { clerkClient, currentUser } from "@clerk/nextjs/server";
 
 const prisma = new PrismaClient();
-const webhookSecret = process.env.WEBHOOK_METADATA || "";
+const webhookSecret = process.env.STUDENT_WEBHOOK_METADATA || "";
 
 async function handler(request: Request) {
   const payload = await request.json();
@@ -46,8 +46,7 @@ async function handler(request: Request) {
   const eventType = evt.type;
 
   const { id, publicMetadata, privateMetadata } = evt.data;
-  const defaultrole = publicMetadata?.role || "student"; // Default role to 'student'
-  const teacherrole = privateMetadata?.role || "teacher";
+  const defaultrole = privateMetadata?.role || "student"; // Default role to 'student'
   let userdata: Prisma.UserCreateInput;
 
   const user = await currentUser();
@@ -81,10 +80,10 @@ async function handler(request: Request) {
     await prisma.user.update({
       where: { clerkId: evt.data.id },
       data: {
-        role: newRole, // Update role column in Prisma based on Clerk data
+        role: defaultrole, // Update role column in Prisma based on Clerk data
         clerkAttributes: {
           privateMetadata: {
-            role: newRole,
+            role: defaultrole,
           },
         },
       },

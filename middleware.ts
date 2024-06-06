@@ -9,26 +9,17 @@ export default clerkMiddleware(
 
     if (isProtectedRoute(req)) {
       auth().protect();
-      if (role === "teacher") {
+      if (role === "student") {
         console.log("role is ", role);
         auth().protect();
-        // return NextResponse.redirect(new URL("/teacher", req.url));
-      }
-      if (role === "student" && isTeacherRoute(req)) {
-        console.log("role is ", role);
-        auth().protect();
-        return NextResponse.redirect(new URL("/unauthorized", req.url));
       }
     }
   }
   //{ debug: true }
 );
 
-const isTeacherRoute = createRouteMatcher(["/teacher(.*)"]);
-
 const isProtectedRoute = createRouteMatcher([
   "/",
-  "/teacher(.*)", //for admin/teacher or student/customer pages
   "/student(.*)", //kapag wala pang subroutes don't put (.*)
 ]);
 
@@ -36,9 +27,7 @@ export const config = {
   matcher: ["/((?!.+.[w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
   publicRoutes: [
     "/sign-in(.*)",
-    "/teacher-sign-up(.*)",
     "/sign-up(.*)",
-    "/teacher-sign-in(.*)",
     "/landing(.*)",
     "/about",
     "/unauthorized",
