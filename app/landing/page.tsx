@@ -8,7 +8,7 @@ const LandingPage = () => {
       {/* Navbar */}
       <MainNav />
       {/* Landing Page Content */}
-      <div className="bg-black h-[calc(100vh-72px)] text-white bg-full flex flex-col justify-center items-center">
+      <div className="bg-white h-[calc(100vh-72px)] text-white bg-full flex flex-col justify-center items-center">
         <Image
           width={50}
           height={50}

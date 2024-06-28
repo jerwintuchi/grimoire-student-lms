@@ -12,7 +12,7 @@ import {
 
 const MainNav = () => {
   return (
-    <nav className="bg-red-700 text-white p-4 sticky top-0 z-50">
+    <nav className="bg-transparent backdrop-filter backdrop-blur-sm text-black p-2 sticky top-0 z-50">
       <div className="flex justify-start">
         <Link href="/landing">
           <Button variant="ghost" className="hover:bg-red-600 ">
@@ -35,14 +35,14 @@ const MainNav = () => {
               <NavigationMenuContent className="bg-red-700">
                 <NavigationMenuLink>
                   <Link href="/sign-in">
-                    <Button className="bg-red-700 hover:bg-orange-600 hover:text-white">
+                    <Button className=" hover:bg-red-600 w-full hover:text-white">
                       Sign In
                     </Button>
                   </Link>
                 </NavigationMenuLink>
                 <NavigationMenuLink>
                   <Link href="/sign-up">
-                    <Button className="bg-red-700 hover:bg-orange-600 hover:text-white">
+                    <Button className=" hover:bg-red-600 hover:text-white">
                       Register
                     </Button>
                   </Link>

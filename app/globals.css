@@ -103,145 +103,161 @@ body {
     }
   }
 
+
   /*--------------------AVATARBOX------------ C L E R K CUSTOM STYLE--------------------------------------------*/
 
-.cl-userPreviewAvatarContainer{
-  border: 2px solid #f0f0f0; 
-  border-radius: 100%; 
-  padding: 2px; 
+.cl-userPreviewAvatarContainer {
+  border: 2px solid #b91c1c; /* Red border */
+  border-radius: 100%;
+  padding: 2px;
 }
 
 .cl-internal-1baqzr {
-  background-color: #8D1717;
-  
+  background-color: #8D1717; /* Darker red background */
 }
 
+.cl-internal-2z8hkq {
+  border: 2px solid #b91c1c; /* Red border */
+  border-radius: 100%;
+  padding: 2px;
+}
+
+.cl-internal-2z8hkq:hover {
+  border-color: #b91c1c; /* Red border on hover */
+}
+
+/*---AVATAR SETTINGS----*/
+
 .cl-userPreviewMainIdentifier {
-  color: #ffffff;  /* Name text color */
+  color: black; /* Name text color */
 }
 
 .cl-userPreviewSecondaryIdentifier {
-  color: #ffe604;  /* username text color */
+  color: #ffe604; /* Username text color */
 }
-
 
 /* MIDDLE PART OF THE POPUP CARD */
 
 .cl-userButtonPopoverActionButton {
-  color: #8D1717; /* red text */
+  color: #b91c1c; /* Red text */
 }
+
 .cl-userButtonPopoverActionButton:hover {
-  color: #e01c1c; /* highlight red text when hovering */
+  color: #8D1717; /* Darker red text when hovering */
 }
-/* the one behind the front card*/
-.cl-cardBox{
-  background-color: #b91c1c;
-  padding-bottom: 10px;
-  border-radius: 45px 45px 0px 0px;
-  border: 3px solid #000000;
+
+/* BACKGROUND CARD */
+
+.cl-cardBox {
+  background-color: #ffffff;
+  border-radius: 45px;
+  border: 2px solid #b91c1c; /* Red border */
 }
+
 .cl-internal-rk8nkz {
-  background-color: #8D1717;
-  border-radius: 10px 10px 10px 10px;
-  padding: 6px 6px 6px 6px
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 6px;
 }
+
 .cl-card {
-  /* card container */
-  background-color: #8D1717;
-  border-radius: 40px 40px 0px 0px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  background-color: #490D0D;
+  border-radius: 40px 40px 0 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  border: 2px solid #000000;
+  border: 2px solid #b91c1c; /* Red border */
 }
 
 .cl-logoImage {
-  /* logo image */
+  margin-top: 10px;
   width: 60%;
   height: auto;
   transition: box-shadow 0.3s ease-in-out;
-  border-radius: 25%;
+  border-radius: 40%;
 }
+
 .cl-logoImage:hover {
-  /* logo image */
-  box-shadow: 0 5px 20px #ff2d2d80;
+  box-shadow: 0 0px 70px #b91c1c; /* Red glow */
+}
+
+.cl-logoImage:active {
+  box-shadow: 0 0px 70px #8D1717; /* Darker red glow */
 }
 
 .cl-formFieldInfoText {
-  /* form field info text */
   font-size: 12px;
-  color: #7E5920;
+  color: #e30404;
 }
 
 .cl-main {
-  /* Your custom styles for the main container */
   margin-top: 4px;
 }
-
 
 /* HEADER TEXT STYLING */
 
 .cl-headerTitle {
-  /* header title */
   font-size: 20px;
   font-weight: bold;
-  color: #ffffff;
+  color: rgb(255, 254, 254); /* Red text */
 }
 
 .cl-headerSubtitle {
-  /* header subtitle */
   font-size: 14px;
-  color: #c0bebe;
+  color: #b7b4b4; /* Darker red text */
 }
 
-/*------------------SIGNIN----CARD-------------------------------------*/
 /* BUTTON STYLING */
-.cl-socialButtonsBlockButton {
-  /*GOOGLE BUTTON*/
-  background-color: #700909 ;
-  color: #ffffff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
 
+.cl-socialButtonsBlockButton {
+  background-color: #8D1717; /* Darker red background */
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
 .cl-socialButtonsBlockButton:hover {
-  background-color: #d60c0c;
+  background-color: #b91c1c; /* Red background on hover */
 }
 
 /* DIVIDER STYLING */
+
 .cl-dividerLine {
-  /* divider line */
-  border-top: 2px solid #9e9e9e;
+  display: none;
+  border-top: 2px solid #ad0606;
 }
 
 .cl-dividerText {
-  /*  divider text */
   font-size: 12px;
-  color: #fff;
+  color: #ffffff;
   margin: 0 10px;
 }
 
 /* FORM FIELD STYLING */
+
 .cl-formFieldLabel {
-  /* EMAIL OR USERNAME label */
   font-size: 14px;
   color: #ffffff;
 }
 
 .cl-formFieldInput {
-  /* field input */
   padding: 8px;
-  border: 3px solid #ccc;
+  border: 3px solid #b91c1c; /* Red border */
   border-radius: 30px;
+  background-color: #ffffff;
+  color: #8D1717; /* Darker red text */
+}
+
+.cl-formFieldInput::placeholder {
+  color: #b91c1c; /* Red placeholder text */
 }
 
 /* PRIMARY BUTTON STYLING */
+
 .cl-formButtonPrimary {
-  /* button */
-  background-color: #8b3706;
-  color: #fff;
+  background-color: #b91c1c; /* Red background */
+  color: #ffffff;
   padding: 10px 20px;
   border: none;
   border-radius: 20px;
@@ -249,27 +265,47 @@ body {
 }
 
 .cl-formButtonPrimary:hover {
-  /*hover styles for the primary button */
-  background-color: #8D1717;
+  background-color: #8D1717; /* Darker red background on hover */
 }
 
+/* FOOTER STYLING */
+
 .cl-footer {
-  background-color: #490D0D;
-  /*border-radius: 0px 0px 20px 20px;*/
+  background-color: #8D1717; /* Darker red background */
 }
+
+.cl-internal-4x6jej {
+  border-radius: 0 0 15px 15px;
+  background: #b91c1c; /* Red background */
+}
+
+/* SIGN-UP LINK */
+
+.cl-internal-kyvqj0 {
+  color: #ebe1f5;
+}
+
+.cl-internal-1v2koqu {
+  color: #050505;
+}
+
+.cl-internal-1v2koqu:hover {
+  color: #000000; /* Red text on hover */
+}
+
 /* Hides the "Secured by Clerk" element */
+
 .cl-internal-180wb59 {
-  display: none; /* for the initial loginpage */
+  display: none; /* For the initial login page */
 }
 
 .cl-internal-11ttlho {
-  display: none; /* for the userbutton */
+  display: none; /* For the user button */
 }
 
 .cl-internal-lqfubk {
-  display: none; /* for the view account */
+  display: none; /* For the view account */
 }
-
 
  /*----------------------------spinner------------------------------*/
  .spinner {
