@@ -92,7 +92,7 @@ export const CourseCard = ({
             <Badge className="text-white group-hover:bg-opacity-100"
             style={{
               backgroundColor: badgeColor, // Set hover background color based on tier
-            }}>{category}</Badge>
+            }}>{tier}</Badge>
           </div>
           <div className="bg-black bg-opacity-70 p-3 rounded transition-all duration-300 group-hover:bg-opacity-20 mt-auto">
             <div
@@ -109,7 +109,7 @@ export const CourseCard = ({
                   backgroundColor: badgeColor, // Set badge background color based on tier
                 }}
               >
-                {tier}
+                {category}
               </Badge>
             </p>
             <div className="my-3 flex items-center gap-x-2 text-sm md:text-xs">
