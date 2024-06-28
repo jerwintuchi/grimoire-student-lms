@@ -20,12 +20,12 @@ const NavbarRoutes = () => {
       {isTeacherPage || isPlayerPage ? (
         <div>
           <GreetUser />
-          <Link href="/">
+          <Link href="/search">
             <Button
               size="sm"
               className="text-white bg-red-500 hover:bg-red-800 hover:text-white size-auto">
               <LogOut className="h-4 w-4 mr-2" />
-              Back to Student Mode
+              Back
             </Button>
           </Link>
         </div> //isTeacher is from .env and teacherUser is from sessionClaims

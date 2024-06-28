@@ -30,24 +30,26 @@ export const Combobox = ({ options, value, onChange }: ComboboxProps) => {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild className="bg-red-500 hover:bg-red-600">
+      <PopoverTrigger
+        asChild
+        className="bg-[#181622] hover:bg-[#291839] border border-[#643d88]">
         <Button
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className=" hover:bg-red-500 w-[200px] justify-between rounded px-2 py-1 text-left focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 ">
+          className=" hover:bg-[#853bce] w-[200px] justify-between rounded px-2 py-1 text-left focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#291839] ">
           {value
             ? options.find((option) => option.value === value)?.label
             : "Select Option..."}
           <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0 ">
-        <Command className="bg-red-500">
+      <PopoverContent className="w-[200px] p-0 border border-[#853bce]">
+        <Command className="bg-[#181622] text-[#b98ee4]">
           <CommandInput placeholder="Search Magic..." className="h-9" />
           <CommandList>
-            <CommandEmpty>No Option found.</CommandEmpty>
-            <CommandGroup className="hover:bg-red-500 hover:text-black">
+            <CommandEmpty>No Magic Category found.</CommandEmpty>
+            <CommandGroup className=" text-[#b98ee4] hover:text-[#b98ee4]">
               {options.map((option) => (
                 <CommandItem
                   key={option.value}

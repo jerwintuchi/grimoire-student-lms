@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -15,33 +16,45 @@ datasource db {
 }
 
 model User {
-  id              Int    @id @default(autoincrement())
-  clerkId         String @unique
-  role            String @default("student")
+  id              Int     @id @default(autoincrement())
+  clerkId         String  @unique
+  role            String  @default("student")
   clerkAttributes Json?
+  tierId          String? @default("free")
+
+  tier Tier? @relation(fields: [tierId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([tierId])
 }
 
 model Course {
-  id          String  @id @default(uuid())
-  userId      String //this is from clerk
-  title       String  @db.Text
+  id     String @id @default(uuid())
+  userId String //this is from clerk
+  title  String @unique @db.Text
+  code   String @unique @db.Text
+
   description String? @db.Text
   imageUrl    String? @db.Text
-  price       Float?
   isPublished Boolean @default(false)
 
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id])
 
+  tierId String?
+  tier   Tier?   @relation(fields: [tierId], references: [id])
+
+  chapters    Chapter[]
   attachments Attachment[]
+  purchases   Purchase[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
+  @@index([tierId])
 }
 
 model Category {
@@ -62,4 +75,108 @@ model Attachment {
   updatedAt DateTime @updatedAt
 
   @@index([courseId])
+}
+
+model Chapter {
+  id          String  @id @default(uuid())
+  title       String
+  description String? @db.Text
+  videoUrl    String? @db.Text
+  position    Int
+  isPublished Boolean @default(false)
+  isFree      Boolean @default(false)
+
+  muxData MuxData?
+
+  quiz Quiz?
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  userProgress UserProgress[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
+}
+
+model Quiz {
+  id        String     @id @default(uuid())
+  title     String
+  chapterId String     @unique
+  chapter   Chapter    @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  questions Question[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Question {
+  id      String @id @default(uuid())
+  text    String
+  options Json // Storing options as JSON, including the correct answer
+  quizId  String
+  quiz    Quiz   @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@index([quizId])
+}
+
+model MuxData {
+  id         String  @id @default(uuid())
+  assetId    String
+  playbackId String?
+
+  chapterId String  @unique
+  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+}
+
+model UserProgress {
+  id     String @id @default(uuid())
+  userId String
+
+  chapterId String
+  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  isCompleted Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, chapterId])
+  @@index([chapterId])
+}
+
+model Purchase {
+  id     String @id @default(uuid())
+  userId String
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, courseId])
+  @@index([courseId])
+}
+
+model StripeCustomer {
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  stripeCustomerId String   @unique
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Tier {
+  id    String @id @default(uuid())
+  name  String @unique
+  price Float // The price for this tier
+
+  users   User[]
+  courses Course[]
 }
