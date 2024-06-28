@@ -34,11 +34,11 @@ const CourseSidebarItem = ({
       onClick={onClick}
       type="button"
       className={cn(
-        "flex items-center gap-x-2 text-[#b98ee4] text-sm font-[500] pl-6 transition-all hover:text-white hover:bg-[#853bce] p-2 rounded-md",
-        isActive && "bg-[#b98ee4] text-white font-medium hover:bg-[#853bce]",
+        "flex items-center gap-x-2 text-gray-600 text-sm font-[500] pl-6 transition-all hover:text-white hover:bg-gray-800 p-2 rounded-md",
+        isActive && "bg-gray-800 text-white font-medium hover:bg-gray-700",
         isCompleted &&
-          "bg-[#853bce] text-[#e5d9f0] font-medium hover:bg-[#b98ee4]",
-        isCompleted && isActive && "bg-[#4c0494] text-[#e5d9f0]"
+          "bg-gray-800 text-[#e5d9f0] font-medium hover:bg-[#b98ee4]",
+        isCompleted && isActive && "bg-gray-800 text-[#e5d9f0]"
       )}>
       <div className="flex items-center gap-x-2 py-2">
         <Icon
