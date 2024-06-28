@@ -89,7 +89,10 @@ export const CourseCard = ({
               backgroundColor: badgeColor, // Set badge background color based on tier
             }}
           >
-            <Badge className="text-white group-hover:bg-opacity-100">{category}</Badge>
+            <Badge className="text-white group-hover:bg-opacity-100"
+            style={{
+              backgroundColor: badgeColor, // Set hover background color based on tier
+            }}>{category}</Badge>
           </div>
           <div className="bg-black bg-opacity-70 p-3 rounded transition-all duration-300 group-hover:bg-opacity-20 mt-auto">
             <div
