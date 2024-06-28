@@ -43,9 +43,9 @@ export const CategoryItem = ({
       onClick={onClick}
       type="button"
       className={cn(
-        "py-1 px-3 text-sm border border-[#b91c1c] rounded-full hover:border-[#8D1717] hover:text-[#fc5959] flex items-center gap-x-1 transition",
+        "py-1 px-3 text-sm border border-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900 flex items-center gap-x-1 transition",
         isSelected &&
-          "bg-[#b91c1c] border-[#8D1717] text-white hover:text-white" //change style if active
+          "bg-red-600 border-red-600 text-white hover:text-white" //change style if active
       )}>
       {Icon && <Icon size={20} />}
       <div className="truncate">{label}</div>

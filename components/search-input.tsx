@@ -33,13 +33,13 @@ export const SearchInput = () => {
 
   return (
     <div className="relative">
-      <SearchIcon className=" h-4 w-4 absolute top-3 left-3 text-[#b91c1c]" />
+      <SearchIcon className=" h-4 w-4 absolute top-3 left-3 text-white" />
       <Input
         onChange={(e) => {
           setValue(e.target.value);
         }}
         value={value}
-        className="w-full md:w-[300px] pl-9 rounded-full bg-[#242227] focus-visible:ring-[#b91c1c] border border-[#b91c1c] text-[#b91c1c] "
+        className="w-full md:w-[300px] pl-9 rounded-full bg-[#242227] focus-visible:ring-gray-400 border border-gray text-white "
         placeholder="Find Spells to learn..."
       />
     </div>

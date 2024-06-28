@@ -33,7 +33,7 @@ const iconMap: Record<Category["name"], IconType> = {
 
 export const Categories = ({ items }: CategoriesProps) => {
   return (
-    <div className="flex items-center gap-x-4 overflow-scroll border border-[#b91c1c] scrollbar-hide pb-22 p-4 rounded-md">
+    <div className="flex items-center gap-x-4 overflow-scroll scrollbar-hide pb-22 p-4 rounded-md">
       {items.map((item) => (
         <CategoryItem
           key={item.id}

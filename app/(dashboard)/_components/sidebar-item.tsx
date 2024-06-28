@@ -24,7 +24,7 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
       onClick={onClick}
       type="button"
       className={cn(
-        "flex items-center gap-x-2 text-gray-600 text-sm font-semibold pl-6 transition-all hover:text-black-500 hover:bg-gray-800 hover:border-l-8 hover:border-gray-900",
+        "flex items-center gap-x-2 text-gray-600 text-sm font-semibold pl-6 transition-all hover:text-gray-400 hover:bg-gray-800 hover:border-l-8 hover:border-gray-900",
         isActive &&
           "text-white bg-gray-600 hover:bg-gray-600 hover:text-gray-200 border-l-8 border-gray-900" // Add transition class here
       )}>
