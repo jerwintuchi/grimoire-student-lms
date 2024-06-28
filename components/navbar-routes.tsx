@@ -17,9 +17,8 @@ const NavbarRoutes = () => {
 
   return (
     <div className="flex gap-x-2 ml-auto">
-      {isTeacherPage || isPlayerPage ? (
+      { isPlayerPage && (
         <div>
-          <GreetUser />
           <Link href="/search">
             <Button
               size="sm"
@@ -29,22 +28,8 @@ const NavbarRoutes = () => {
             </Button>
           </Link>
         </div> //isTeacher is from .env and teacherUser is from sessionClaims
-      ) : isTeacher(userId) ? (
-        <div>
-          <GreetUser />
-          <Link href="/teacher/courses">
-            <Button
-              size="sm"
-              variant="ghost"
-              className="text-black bg-red-500 
-                    hover:bg-white hover:text-white-300 border-red-900 size-auto">
-              Teacher Mode
-            </Button>
-          </Link>
-        </div>
-      ) : (
-        <GreetUser />
       )}
+      <GreetUser />
 
       <UserButton afterSignOutUrl="/sign-in" />
     </div>

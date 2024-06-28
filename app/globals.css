@@ -107,23 +107,23 @@ body {
   /*--------------------AVATARBOX------------ C L E R K CUSTOM STYLE--------------------------------------------*/
 
 .cl-userPreviewAvatarContainer {
-  border: 2px solid #b91c1c; /* Red border */
+  border: 2px solid #666666; /* Gray border */
   border-radius: 100%;
   padding: 2px;
 }
 
 .cl-internal-1baqzr {
-  background-color: #8D1717; /* Darker red background */
+  background-color: #888888; /* Light Gray background */
 }
 
 .cl-internal-2z8hkq {
-  border: 2px solid #b91c1c; /* Red border */
+  border: 2px solid #787878; /* Gray border */
   border-radius: 100%;
   padding: 2px;
 }
 
 .cl-internal-2z8hkq:hover {
-  border-color: #b91c1c; /* Red border on hover */
+  border-color: #41415f; /* Red border on hover */
 }
 
 /*---AVATAR SETTINGS----*/
@@ -139,11 +139,11 @@ body {
 /* MIDDLE PART OF THE POPUP CARD */
 
 .cl-userButtonPopoverActionButton {
-  color: #b91c1c; /* Red text */
+  color: #464649; /* Gray text */
 }
 
 .cl-userButtonPopoverActionButton:hover {
-  color: #8D1717; /* Darker red text when hovering */
+  color: #39393a; /* Darker Gray text when hovering */
 }
 
 /* BACKGROUND CARD */
@@ -151,7 +151,7 @@ body {
 .cl-cardBox {
   background-color: #ffffff;
   border-radius: 45px;
-  border: 2px solid #b91c1c; /* Red border */
+  /*border: 2px solid #b91c1c; /* Red border */
 }
 
 .cl-internal-rk8nkz {

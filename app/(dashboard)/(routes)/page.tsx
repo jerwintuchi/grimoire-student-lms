@@ -21,7 +21,7 @@ export default async function TeacherDashBoard(role: Roles) {
 
   return (
     <div>
-      <UserButton afterSignOutUrl="/sign-in" />
+      {/* <UserButton afterSignOutUrl="/sign-in" /> */}
     </div>
   );
 }
