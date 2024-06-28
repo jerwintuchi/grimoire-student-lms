@@ -28,8 +28,8 @@ export const CoursesList = ({ items }: CoursesListProps) => {
           />
         ))}
       </div>
-      <div className="text-center text-md text-[#9878b8] mt-10">
-        {items.length === 0 && <div>No courses found</div>}
+      <div className="text-center text-md text-[#b91c1c] mt-10">
+        {items.length === 0 && <div>No Spells found</div>}
       </div>
     </div>
   );

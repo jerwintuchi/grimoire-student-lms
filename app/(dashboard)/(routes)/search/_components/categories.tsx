@@ -1,7 +1,6 @@
 "use client";
 
 import { Category } from "@prisma/client";
-import {} from "react-icons/fc";
 import {
   GiFireSpellCast,
   GiGhostAlly,
@@ -15,6 +14,7 @@ import {
 } from "react-icons/gi";
 import { IconType } from "react-icons/lib";
 import { CategoryItem } from "./category-item";
+
 interface CategoriesProps {
   items: Category[];
 }
@@ -30,10 +30,10 @@ const iconMap: Record<Category["name"], IconType> = {
   "Arcane Studies": GiMagicPortal,
   "ᛟᚾᚡᛖᚱ": GiBurningBook,
 };
-/* eslint-enable */
+
 export const Categories = ({ items }: CategoriesProps) => {
   return (
-    <div className="flex items-center gap-x-2 overflow-scroll scrollbar-hide pb-2 over">
+    <div className="flex items-center gap-x-4 overflow-scroll border border-[#b91c1c] scrollbar-hide pb-22 p-4 rounded-md">
       {items.map((item) => (
         <CategoryItem
           key={item.id}
