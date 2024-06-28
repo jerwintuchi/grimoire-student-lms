@@ -21,9 +21,9 @@ const getTierStyles = (tier: string) => {
     case "magister":
       return {
         borderColor: "#daa520", // gold
-        titleColor: "#6a1b9a", // purple
+        titleColor:  "#e8b923", // light gold
         badgeColor: "#daa520", // gold
-        hoverColor: "#ffd700", // bright gold
+        hoverColor: "#c4a747", // darker gold
       };
     case "academic":
       return {
@@ -42,9 +42,9 @@ const getTierStyles = (tier: string) => {
     default:
       return {
         borderColor: "#291839", // purple
-        titleColor: "#b98ee4", // light purple
+        titleColor: "#7e57c2", // light gold
         badgeColor: "#291839", // purple
-        hoverColor: "#7e57c2", // bright purple
+        hoverColor: "#6a1b9a", // bright gold
       };
   }
 };
@@ -113,7 +113,7 @@ export const CourseCard = ({
               </Badge>
             </p>
             <div className="my-3 flex items-center gap-x-2 text-sm md:text-xs">
-              <div className="flex items-center gap-x-1 transition-all duration-300 group-hover:text-opacity-80" style={{ color: titleColor }}>
+              <div className="flex items-center gap-x-1 transition-all duration-300 group-hover:text-opacity-80" style={{ color: titleColor, }}>
                 <IconBadge size="sm" icon={BookOpenText} />
                 <span>
                   {chaptersLength}{" "}
