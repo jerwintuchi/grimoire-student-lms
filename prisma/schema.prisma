@@ -24,6 +24,10 @@ model User {
 
   tier Tier? @relation(fields: [tierId], references: [id])
 
+  stripeCustomerId     String? @unique @map(name: "stripe_customer_id")
+  stripeSubscriptionId String? @unique @map(name: "stripe_subscription_id")
+  stripePriceId        String? @map(name: "stripe_price_id")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -153,6 +157,8 @@ model UserProgress {
 model Purchase {
   id     String @id @default(uuid())
   userId String
+  tierId String
+  tier   Tier   @relation(fields: [tierId], references: [id], onDelete: Cascade)
 
   courseId String
   course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
@@ -160,7 +166,9 @@ model Purchase {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([userId, tierId])
   @@unique([userId, courseId])
+  @@index([tierId])
   @@index([courseId])
 }
 
@@ -173,9 +181,10 @@ model StripeCustomer {
 }
 
 model Tier {
-  id    String @id @default(uuid())
-  name  String @unique
-  price Float // The price for this tier
+  id        String     @id @default(uuid())
+  name      String     @unique
+  price     Float // The price for this tier
+  purchases Purchase[]
 
   users   User[]
   courses Course[]
