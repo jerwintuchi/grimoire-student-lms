@@ -1,6 +1,7 @@
 "use client";
 import {
   BarChart2Icon,
+  Gem,
   Layout,
   List,
   ListCollapse,
@@ -30,6 +31,11 @@ const guestRoutes = [
     label: "Browse",
     href: "/search",
   },
+  {
+    Icon: Gem, //Pricing Icon
+    label: "Subscription",
+    href: "/subscription",
+  }
 ];
 
 
