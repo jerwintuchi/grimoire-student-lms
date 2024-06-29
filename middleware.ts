@@ -26,6 +26,7 @@ const isProtectedRoute = createRouteMatcher([
 export const config = {
   matcher: ["/((?!.+.[w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
   publicRoutes: [
+    "/api/webhook",
     "/sign-in(.*)",
     "/sign-up(.*)",
     "/landing(.*)",

@@ -99,8 +99,8 @@ export async function POST(
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/courses/${course.id}?success=1`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/courses/${course.id}?cancelled=1`,
       metadata: {
-        courseId: course.id,
-        userId: user.id,
+        courseId: course.id, // this course ------------------------------------------
+        userId: user.id, //lets the webhook know that this user purchases the course ^^^
       },
     });
 

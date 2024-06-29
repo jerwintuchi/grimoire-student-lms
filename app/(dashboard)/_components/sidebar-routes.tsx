@@ -32,25 +32,10 @@ const guestRoutes = [
   },
 ];
 
-const teacherRoutes = [
-  {
-    Icon: TableProperties, // Teacher Icon Courses
-    label: "Courses",
-    href: "/teacher/courses",
-  },
-  {
-    Icon: BarChart2Icon, // Analytics Icon
-    label: "Analytics",
-    href: "/teacher/analytics",
-  },
-];
 
 export const SidebarRoutes = () => {
-  const pathname = usePathname();
 
-  const isTeacherPage = pathname.includes("/teacher");
-
-  const routes = isTeacherPage ? teacherRoutes : guestRoutes;
+  const routes =  guestRoutes;
 
   return (
     <div className="flex flex-col w-full">
