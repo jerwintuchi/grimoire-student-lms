@@ -7,7 +7,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 interface CourseEnrollButtonProps {
-  tier: string;
+  tier: string; // tier price that is already formatted on parent page
   courseId: string;
 }
 
