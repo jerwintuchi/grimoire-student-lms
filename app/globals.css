@@ -317,7 +317,7 @@ body {
 .spinner > div {
   width: 18px;
   height: 18px;
-  background-color: #b98ee4;
+  background-color: gray;
 
   border-radius: 100%;
   display: inline-block;

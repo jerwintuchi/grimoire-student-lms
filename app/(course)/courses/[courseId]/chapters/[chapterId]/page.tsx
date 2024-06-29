@@ -69,7 +69,7 @@ const ChapterIdPage = async ({
         </div>
         <div>
           <div className="p-4 flex flex-col md:flex-row items-center">
-            <h2 className="text-2xl font-semibold mb-2 text-[#b98ee4] mr-4 ">
+            <h2 className="text-2xl font-semibold mb-2 text-gray-600 mr-4 ">
               {chapter.title}
             </h2>
             {purchase ? (
@@ -81,7 +81,7 @@ const ChapterIdPage = async ({
               />
             )}
           </div>
-          <Separator className="mb-4 bg-[#b98ee4]" />
+          <Separator className="mb-4 bg-gray-600" />
           <div>
             <Preview value={chapter.description!} />
           </div>
@@ -94,7 +94,7 @@ const ChapterIdPage = async ({
                     href={attachment.url}
                     target="_blank"
                     key={attachment.id}
-                    className="flex items-center p-3 w-full bg-[#853bce] hover:bg-[#853bce] border rounded-md hover:underline">
+                    className="flex items-center p-3 w-full bg-gray-500 hover:bg-gray-600 border rounded-md hover:underline">
                     <File />
                     <p className="line-clamp-1">{attachment.name}</p>
                   </a>

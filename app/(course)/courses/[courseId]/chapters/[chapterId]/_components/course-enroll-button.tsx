@@ -32,7 +32,7 @@ const CourseEnrollButton = ({ tier, courseId }: CourseEnrollButtonProps) => {
       onClick={onClick}
       disabled={isLoading}
       size="lg"
-      className="w-full text-md md:w-auto text-[#b98ee4] bg-[#291839] hover:text-white hover:bg-[#853bce] rounded-full">
+      className="w-full text-md md:w-auto text-gray-600 bg-green-500 hover:text-white hover:bg-green-600 rounded-full">
       <LucideBookPlus className="w-4 h-4 mr-2" />
       Enroll for {tier}
     </Button>

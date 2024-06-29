@@ -37,14 +37,14 @@ const CourseSidebarItem = ({
         "flex items-center gap-x-2 text-gray-600 text-sm font-[500] pl-6 transition-all hover:text-white hover:bg-gray-800 p-2 rounded-md",
         isActive && "bg-gray-800 text-white font-medium hover:bg-gray-700",
         isCompleted &&
-          "bg-gray-800 text-[#e5d9f0] font-medium hover:bg-[#b98ee4]",
+          "bg-gray-800 text-gray-500 font-medium hover:bg-gray-700",
         isCompleted && isActive && "bg-gray-800 text-[#e5d9f0]"
       )}>
       <div className="flex items-center gap-x-2 py-2">
         <Icon
           size={22}
           className={cn(
-            "text-[#b98ee4]",
+            "text-gray-600",
             isActive && "text-white",
             isCompleted && "text-[#e5d9f0]"
           )}
