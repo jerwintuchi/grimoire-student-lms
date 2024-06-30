@@ -21,18 +21,20 @@ export async function POST(req: Request) {
   const session = event.data.object as Stripe.Checkout.Session;
   const userId = session?.metadata?.userId;
   const courseId = session?.metadata?.courseId;
+  const tierId = session?.metadata?.tierId;
 
   if (event.type.match("checkout.session.completed")) {
-    if (!userId || !courseId) {
+    if (!userId || !courseId || !tierId) {
       return new NextResponse(
         "Webhook Error : Missing Metadata (userI or courseId)",
         { status: 400 }
       );
     }
     await db.purchase.create({
-      data: {
-        userId,
-        courseId,
+        data: {
+          userId,
+          tierId,
+          courseId,
       },
     });
   } else {
