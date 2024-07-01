@@ -17,13 +17,13 @@ const SubscribeButton = ({
 }: SubscribeButtonProps)  => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const handleSubscribe = async () => {
-
+  const handleSubscribe = async ( buttonTier: string) => {
+    const tierType = buttonTier;
     try {
       setIsLoading(true);
 
       const response = await axios.post(`/api/billing`, {
-        tierId
+        tierId : tierType
       });
       window.location.assign(response.data.url);
     }catch (error) {
@@ -68,7 +68,7 @@ const SubscribeButton = ({
           <div className="flex flex-row gap-x-2 justify-evenly pb-6 items-center">
             <Button
               disabled={isLoading}
-              onClick={handleSubscribe}
+              onClick={()=>handleSubscribe("Academic")}
               className="bg-indigo-600 hover:bg-indigo-700 text-white"
             >
               Academic
@@ -76,7 +76,7 @@ const SubscribeButton = ({
                 or 
             <Button
               disabled={isLoading}
-              onClick={handleSubscribe}
+              onClick={()=>handleSubscribe("Magister")}
               className="bg-amber-400 hover:bg-amber-500 text-white"
             >
               Magister

@@ -75,7 +75,7 @@ export async function POST(
         price_data: {
           currency: "usd",
           product_data: {
-            name: tier.name,
+            name: tier.name[0].toUpperCase() + tier.name.slice(1) + " Tier",
             description: tier.description,
           },
           unit_amount: 0,
@@ -87,7 +87,7 @@ export async function POST(
         price_data: {
           currency: "usd",
           product_data: {
-            name: tier.name,
+            name: tier.name[0].toUpperCase() + tier.name.slice(1) + " Tier",
             description: tier.description,
           },
           unit_amount: tier.price * 100,
@@ -121,8 +121,8 @@ export async function POST(
       customer: stripeCustomer.stripeCustomerId,
       line_items, // add in the line items
       mode: "payment", // one-time
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/subscription/${tier.id}?success=1`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/subscription/${tier.id}?cancelled=1`,
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/subscription/?success=1`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/subscription/?cancelled=1`,
       metadata: {
         tierId: tier.id,
         userId: user.id,
