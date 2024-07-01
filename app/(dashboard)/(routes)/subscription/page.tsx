@@ -21,6 +21,8 @@ const SubscriptionPage = async () => {
         tier: true,
       },
     });
+
+    const tiers = await db.tier.findMany();
   
     // Determine the current tier of the user
     let currentTier = "free"; // Default to free tier if not found
@@ -47,17 +49,17 @@ const SubscriptionPage = async () => {
           <thead>
             <tr className="hover:bg-gray-100">
               <th className="w-1/4 text-center p-4 bg-indigo-700 text-white font-bold">Features</th>
-              <th className="w-1/4 text-center p-4 bg-green-600 text-white font-bold">Free</th>
-              <th className="w-1/4 text-center p-4 bg-indigo-500 text-white font-bold">Academic</th>
-              <th className="w-1/4 text-center p-4 bg-amber-400 text-white font-bold">Magister</th>
+              <th className="w-1/4 text-center p-4 bg-green-600 text-white font-bold">{tiers[0].id}</th>
+              <th className="w-1/4 text-center p-4 bg-indigo-500 text-white font-bold">{tiers[1].id}</th>
+              <th className="w-1/4 text-center p-4 bg-amber-400 text-white font-bold">{tiers[2].id}</th>
             </tr>
           </thead>
           <tbody>
             <tr className="hover:bg-gray-100">
               <td className="text-center p-4 font-semibold">Price</td>
-              <td className="text-center p-4">Free</td>
-              <td className="text-center p-4">$10</td>
-              <td className="text-center p-4">$20</td>
+              <td className="text-center p-4">${tiers[0].price}</td>
+              <td className="text-center p-4">${tiers[1].price}</td>
+              <td className="text-center p-4">${tiers[2].price}</td>
             </tr>
             <tr className="hover:bg-gray-100">
               <td className="text-center p-4 font-semibold">Basic Spells</td>
