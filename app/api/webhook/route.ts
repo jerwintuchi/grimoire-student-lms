@@ -24,9 +24,9 @@ export async function POST(req: Request) {
   const tierId = session?.metadata?.tierId;
 
   if (event.type.match("checkout.session.completed")) {
-    if (!userId || !courseId || !tierId) {
+    if (!userId ||!courseId || !tierId) {
       return new NextResponse(
-        "Webhook Error : Missing Metadata (userI or courseId)",
+        "Webhook Error : Missing Metadata (userI or tierId)",
         { status: 400 }
       );
     }
@@ -34,8 +34,8 @@ export async function POST(req: Request) {
         data: {
           userId,
           tierId,
-          courseId,
-      },
+          courseId, // this shouldn't be needed tbh
+         },
     });
   } else {
     return new NextResponse(

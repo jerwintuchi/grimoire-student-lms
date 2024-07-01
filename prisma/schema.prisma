@@ -153,6 +153,7 @@ model UserProgress {
 model Purchase {
   id     String @id @default(uuid())
   userId String
+
   tierId String
   tier   Tier   @relation(fields: [tierId], references: [id], onDelete: Cascade)
 
@@ -177,11 +178,12 @@ model StripeCustomer {
 }
 
 model Tier {
-  id          String     @id @default(uuid())
-  name        String     @unique
+  id          String @id @default(uuid())
+  name        String @unique
   description String
   price       Float // The price for this tier
-  purchases   Purchase[]
+
+  purchases Purchase[]
 
   users   User[]
   courses Course[]

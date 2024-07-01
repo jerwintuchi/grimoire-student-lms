@@ -1,16 +1,40 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger, DialogContent, DialogClose, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
-const SubscribeButton = ({ userId }: { userId: string }) => {
-  const router = useRouter();
+interface SubscribeButtonProps {
+  userId: string,
+  tierId: string
+}
+
+const SubscribeButton = ({
+  userId, 
+  tierId
+}: SubscribeButtonProps)  => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const handleSubscribe = async () => {
 
-  const handleSubscribe = () => {
-    // Redirect to payment page or handle subscription initiation
+    try {
+      setIsLoading(true);
 
+      const response = await axios.post(`/api/billing`, {
+        tierId
+      });
+      window.location.assign(response.data.url);
+    }catch (error) {
+      console.log(error);
+      toast.error("Something went wrong. Please try again later.");
+    }
+    finally {
+      setIsLoading(false);
+    }
+
+    
     return;
   };
 
@@ -43,14 +67,16 @@ const SubscribeButton = ({ userId }: { userId: string }) => {
 
           <div className="flex flex-row gap-x-2 justify-evenly pb-6 items-center">
             <Button
-              onClick={() => handleTierChange("academic")}
+              disabled={isLoading}
+              onClick={handleSubscribe}
               className="bg-indigo-600 hover:bg-indigo-700 text-white"
             >
               Academic
             </Button>
                 or 
             <Button
-              onClick={() => handleTierChange("magister")}
+              disabled={isLoading}
+              onClick={handleSubscribe}
               className="bg-amber-400 hover:bg-amber-500 text-white"
             >
               Magister
@@ -58,7 +84,9 @@ const SubscribeButton = ({ userId }: { userId: string }) => {
           </div>
 
           <DialogClose>
-            <Button className="bg-red-500 hover:bg-red-600 text-white">Cancel</Button>
+            <Button 
+            disabled={isLoading}
+            className="bg-red-500 hover:bg-red-600 text-white">Cancel</Button>
           </DialogClose>
         </DialogContent>
       </Dialog>

@@ -39,20 +39,38 @@ export const getCourses = async ({
             id: true,
           },
         },
-        purchases: {
-          where: {
-            userId,
-          },
-        },
       },
       orderBy: {
         createdAt: "desc",
       },
     });
+
+    const purchase  = await db.purchase.findMany({
+      where: {
+        userId,
+        tierId: {
+          not: "",
+        }
+      }
+    })
+    const tier = await db.tier.findMany({
+      where: {
+        id: {
+          in: purchase.map(purchase => purchase.tierId)
+        }
+      },
+      include : {
+        purchases:{
+          where: {
+            userId
+          }
+        }
+      }
+    })
     const coursesWithProgress: CourseWithProgressWithCategory[] =
       await Promise.all(
         courses.map(async (course) => {
-          if (course.purchases.length === 0) {
+          if (tier.length === 0) {
             return {
               ...course,
               progress: null,

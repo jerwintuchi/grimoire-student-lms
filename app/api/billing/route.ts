@@ -8,38 +8,14 @@ import { stripe } from "@/lib/stripe";
 
 export async function POST(
   req: Request,
-  { params }: { params: { courseId: string } }
+  // { params }: { params: { courseId: string } }
 ) {
   try {
+    const body = await req.json();
+    const { tierId } = body
     const user = await currentUser();
     if (!user || !user.id || !user.emailAddresses?.[0]?.emailAddress) {
       return new NextResponse("Unauthorized", { status: 401 });
-    }
-
-    const course = await db.course.findUnique({
-      where: {
-        id: params.courseId,
-        isPublished: true,
-      },
-      include: {
-        tier: true,
-      },
-    });
-    const purchase = await db.purchase.findUnique({
-      where: {
-        userId_courseId: {
-          userId: user.id,
-          courseId: params.courseId,
-        },
-      },
-    });
-    //if the user has already purchased the course, return an error
-    if (purchase) {
-      return new NextResponse("Already purchased", { status: 400 });
-    }
-
-    if (!course) {
-      return new NextResponse("Course Not Found", { status: 404 });
     }
 
     const usertier = await db.user.findUnique({
@@ -52,19 +28,47 @@ export async function POST(
     })
 
     if (!usertier) {
-      return new NextResponse("User Not Found", { status: 404 });
+      return new NextResponse("User with a tierNot Found", { status: 404 });
     }
+
+
     const tier = await db.tier.findUnique({
       where: {
-        id: usertier?.tierId!,
+        id: tierId,
       }
     })
     if(!tier){
       return new NextResponse("Tier Not Found", { status: 404 });
     }
+    // const course = await db.course.findUnique({
+    //   where: {
+    //     id: params.courseId,
+    //     isPublished: true,
+    //   },
+    //   include: {
+    //     tier: true,
+    //   },
+    // });
+    const purchase = await db.purchase.findUnique({
+      where: {
+        userId_tierId: {
+          userId: user.id,
+          tierId: tier.id,
+        },
+      },
+    });
+    //if the user has already purchased the tier, return an error
+    if (purchase) {
+      return new NextResponse("Already purchased", { status: 400 });
+    }
+
+    // if (!course) {
+    //   return new NextResponse("Course Not Found", { status: 404 });
+    // }
+
 
     const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
-    //if the course is free
+    //if the tier is free
     if (usertier?.tier?.price === 0) {
       line_items.push({
         quantity: 1,
@@ -117,8 +121,8 @@ export async function POST(
       customer: stripeCustomer.stripeCustomerId,
       line_items, // add in the line items
       mode: "payment", // one-time
-      success_url: `${process.env.NEXT_PROD_PUBLIC_APP_URL}/subscription/${tier.id}?success=1`,
-      cancel_url: `${process.env.NEXT_PROD_PUBLIC_APP_URL}/subscription/${tier.id}?cancelled=1`,
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/subscription/${tier.id}?success=1`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/subscription/${tier.id}?cancelled=1`,
       metadata: {
         tierId: tier.id,
         userId: user.id,
@@ -127,7 +131,7 @@ export async function POST(
 
     return NextResponse.json({ url: session.url });
   } catch (error) {
-    console.log("[COURSE_ID_CHECKOUT] Error:", error);
+    console.log("[TIER_ID_CHECKOUT] Error:", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
