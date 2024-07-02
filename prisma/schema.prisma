@@ -20,9 +20,11 @@ model User {
   clerkId         String  @unique
   role            String  @default("student")
   clerkAttributes Json?
-  tierId          String? @default("free")
+  tierId          String? @default("Free")
 
   tier Tier? @relation(fields: [tierId], references: [id])
+
+  enrolled Enrollment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -36,9 +38,11 @@ model Course {
   title  String @unique @db.Text
   code   String @unique @db.Text
 
-  description String? @db.Text
-  imageUrl    String? @db.Text
-  isPublished Boolean @default(false)
+  enroll      Boolean?     @default(false)
+  enrollments Enrollment[]
+  description String?      @db.Text
+  imageUrl    String?      @db.Text
+  isPublished Boolean      @default(false)
 
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id])
@@ -48,13 +52,26 @@ model Course {
 
   chapters    Chapter[]
   attachments Attachment[]
-  purchases   Purchase[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
   @@index([tierId])
+}
+
+model Enrollment {
+  id       Int    @id @default(autoincrement())
+  userId   String
+  courseId String
+  user     User   @relation(fields: [userId], references: [clerkId], onDelete: Cascade)
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, courseId])
+  @@index([courseId])
 }
 
 model Category {
@@ -150,29 +167,11 @@ model UserProgress {
   @@index([chapterId])
 }
 
-model Purchase {
-  id     String @id @default(uuid())
-  userId String
-
-  tierId String
-  tier   Tier   @relation(fields: [tierId], references: [id], onDelete: Cascade)
-
-  courseId String
-  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([userId, tierId])
-  @@unique([userId, courseId])
-  @@index([tierId])
-  @@index([courseId])
-}
-
 model StripeCustomer {
   id               String   @id @default(uuid())
   userId           String   @unique
   stripeCustomerId String   @unique
+  tier             String?
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 }
@@ -182,8 +181,6 @@ model Tier {
   name        String @unique
   description String
   price       Float // The price for this tier
-
-  purchases Purchase[]
 
   users   User[]
   courses Course[]

@@ -17,14 +17,22 @@ const CourseSidebar = async ({ course, progressCount }: CourseSidebarProps) => {
   const { userId } = auth();
   if (!userId) return redirect("/");
 
-  const purchase = await db.purchase.findUnique({
+  // const purchase = await db.purchase.findUnique({
+  //   where: {
+  //     userId_courseId: {
+  //       userId,
+  //       courseId: course.id,
+  //     },
+  //   },
+  // });
+  const enrolled = await db.course.findUnique({
     where: {
-      userId_courseId: {
-        userId,
-        courseId: course.id,
-      },
-    },
-  });
+      id: userId,
+      enroll: true,
+    }
+
+    
+  })
 
   return (
     <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm border border-[#13111c]">
@@ -40,7 +48,7 @@ const CourseSidebar = async ({ course, progressCount }: CourseSidebarProps) => {
             label={chapter.title}
             isCompleted={!!chapter.userProgress?.[0]?.isCompleted}
             courseId={course.id}
-            isLocked={!chapter.isFree && !purchase} //check this for future reference
+            isLocked={!chapter.isFree && !enrolled} //check this for future reference
           />
         ))}
       </div>

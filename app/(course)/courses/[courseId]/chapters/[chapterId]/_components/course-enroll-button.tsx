@@ -7,19 +7,34 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 interface CourseEnrollButtonProps {
-  tier: string; // tier price that is already formatted on parent page
+  tier: string;
   courseId: string;
+  userId: string;
+  isEnrolled: boolean;
 }
 
-const CourseEnrollButton = ({ tier, courseId }: CourseEnrollButtonProps) => {
+const CourseEnrollButton = ({
+  tier,
+  courseId,
+  userId,
+  isEnrolled,
+}: CourseEnrollButtonProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onClick = async () => {
     try {
       setIsLoading(true);
 
-      const response = await axios.post(`/api/courses/${courseId}/checkout`);
-      window.location.assign(response.data.url);
+      const response = await axios.post(`/api/enroll`, {
+        courseId,
+        userId,
+      });
+
+      if (response.status === 200) {
+        toast.success("Successfully enrolled");
+      } else {
+        toast.error("Something went wrong");
+      }
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
@@ -30,11 +45,11 @@ const CourseEnrollButton = ({ tier, courseId }: CourseEnrollButtonProps) => {
   return (
     <Button
       onClick={onClick}
-      disabled={isLoading}
+      disabled={isLoading || isEnrolled}
       size="lg"
       className="w-full text-md md:w-auto text-gray-600 bg-green-500 hover:text-white hover:bg-green-600 rounded-full">
       <LucideBookPlus className="w-4 h-4 mr-2" />
-      Enroll for {tier}
+      {isEnrolled ? "Already Enrolled" : `Enroll for ${tier}`}
     </Button>
   );
 };

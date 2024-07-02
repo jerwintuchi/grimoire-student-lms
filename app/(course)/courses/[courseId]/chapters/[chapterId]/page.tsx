@@ -9,6 +9,7 @@ import { formatPrice } from "@/lib/format";
 import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/preview";
 import { File } from "lucide-react";
+import { db } from "@/lib/db";
 const ChapterIdPage = async ({
   params,
 }: {
@@ -35,12 +36,28 @@ const ChapterIdPage = async ({
   if (!chapter || !course) {
     return redirect("/");
   }
+  /*MAGLAGAY NG LOGIC PA FOR CHECKING IF HINDI MATCH YUNG TIER NG USER SA INA-ACCESS
+    AND IREDIRECT SA SUBSCRIPTION PAGE*/
+  
+
+  // if(!course.enroll ){
+  //   return redirect("/subscription")
+  // }
+  
   if (course) {
     const tierId = course?.tier?.id;
   }
+  const enroll = await db.enrollment.findFirst({
+    where: {
+      userId: userId,
+      courseId: params.courseId,
+    },
+  });
+  const isEnrolled = userId === enroll?.userId;
+  
 
-  const isLocked = !chapter.isFree && !purchase;
-  const completeOnEnd = !!purchase && !userProgress?.isCompleted;
+  const isLocked = !chapter.isFree && !course.enrollments?.some((enrollment) => String(enrollment.userId) === userId); // from !purchase
+  const completeOnEnd = !!course.enroll && !userProgress?.isCompleted; // from !!purchase
   const freeUser = chapter.isFree && !purchase;
 
   return (
@@ -51,7 +68,7 @@ const ChapterIdPage = async ({
 
       {isLocked && (
         <Banner
-          label="You need to purchase a tier for this chapter"
+          label="You need to enroll first in this course to view this chapter"
           variant="warning"
         />
       )}
@@ -72,12 +89,14 @@ const ChapterIdPage = async ({
             <h2 className="text-2xl font-semibold mb-2 text-gray-600 mr-4 ">
               {chapter.title}
             </h2>
-            {purchase ? (
+            {isEnrolled ? (
               <div>{/* TODO Add CourseProgressButton */}</div>
             ) : (
               <CourseEnrollButton
                 courseId={params.courseId}
-                tier={formatPrice(course?.tier?.price!)}
+                tier={course?.tier?.id!}
+                userId={userId}
+                isEnrolled={isEnrolled}
               />
             )}
           </div>

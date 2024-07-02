@@ -9,14 +9,6 @@ interface GetChapterProps {
 
 const getChapter = async ({ userId, courseId, chapterId }: GetChapterProps) => {
   try {
-    const purchase = await db.purchase.findUnique({
-      where: {
-        userId_courseId: {
-          userId,
-          courseId,
-        },
-      },
-    });
 
     const course = await db.course.findUnique({
       where: {
@@ -25,6 +17,8 @@ const getChapter = async ({ userId, courseId, chapterId }: GetChapterProps) => {
       },
       select: {
         tier: true,
+        enroll: true,
+        enrollments: true,
       },
     });
     const chapter = await db.chapter.findUnique({
@@ -42,15 +36,15 @@ const getChapter = async ({ userId, courseId, chapterId }: GetChapterProps) => {
     let attachments: Attachment[] = [];
     let nextChapter: Chapter | null = null;
 
-    if (purchase) {
+
       attachments = await db.attachment.findMany({
         where: {
           courseId: courseId,
         },
       });
-    }
+  
 
-    if (chapter.isFree || purchase) {
+    if (chapter.isFree ) { // TODO : CONVERT
       muxData = await db.muxData.findUnique({
         where: {
           chapterId: chapterId,
@@ -87,7 +81,6 @@ const getChapter = async ({ userId, courseId, chapterId }: GetChapterProps) => {
       attachments,
       nextChapter,
       userProgress,
-      purchase,
     };
   } catch (error) {
     console.log("[GET_CHAPTER]: ", error);

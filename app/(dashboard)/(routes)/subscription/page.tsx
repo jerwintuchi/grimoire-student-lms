@@ -40,7 +40,15 @@ const SubscriptionPage = async () => {
             Your Current Tier is {currentTier.charAt(0).toUpperCase() + currentTier.slice(1)}
           </h2>
           <div className="flex justify-center pb-2">
-            <SubscribeButton userId={userId} tierId={usertier?.tierId!}/>
+            {
+              currentTier === "Magister" ?
+               (
+                <div></div>
+              ) : (
+                <SubscribeButton userId={userId} currentTier={currentTier}/>
+              )
+            }
+            
             </div> 
         </div>
     
