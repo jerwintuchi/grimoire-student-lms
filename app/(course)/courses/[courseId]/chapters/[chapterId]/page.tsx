@@ -62,7 +62,7 @@ const ChapterIdPage = async ({
   return (
     <div>
       {userProgress?.isCompleted && (
-        <Banner label="You have finished this chapter" variant="success" />
+        <Banner label="You have mastered this chapter" variant="success" />
       )}
 
       {isLocked && (
@@ -94,7 +94,7 @@ const ChapterIdPage = async ({
                   chapterId={params.chapterId}
                   courseId={params.courseId}
                   nextChapterId={nextChapter?.id}
-                  isCompleted={!!userProgress?.isCompleted} userId={""}/>
+                  isCompleted={!!userProgress?.isCompleted}/>
               </div>
             ) : (
               <CourseEnrollButton
