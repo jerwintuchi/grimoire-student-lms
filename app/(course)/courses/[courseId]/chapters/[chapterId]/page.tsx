@@ -10,6 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/preview";
 import { File } from "lucide-react";
 import { db } from "@/lib/db";
+import { CourseProgressButton } from "./_components/course-progress-button";
 const ChapterIdPage = async ({
   params,
 }: {
@@ -36,8 +37,6 @@ const ChapterIdPage = async ({
   if (!chapter || !course) {
     return redirect("/");
   }
-  /*MAGLAGAY NG LOGIC PA FOR CHECKING IF HINDI MATCH YUNG TIER NG USER SA INA-ACCESS
-    AND IREDIRECT SA SUBSCRIPTION PAGE*/
   
 
   // if(!course.enroll ){
@@ -90,7 +89,13 @@ const ChapterIdPage = async ({
               {chapter.title}
             </h2>
             {isEnrolled ? (
-              <div>{/* TODO Add CourseProgressButton */}</div>
+              <div>
+                <CourseProgressButton
+                  chapterId={params.chapterId}
+                  courseId={params.courseId}
+                  nextChapterId={nextChapter?.id}
+                  isCompleted={!!userProgress?.isCompleted} userId={""}/>
+              </div>
             ) : (
               <CourseEnrollButton
                 courseId={params.courseId}
