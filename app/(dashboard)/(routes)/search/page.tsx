@@ -31,15 +31,16 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
     userId,
     ...searchParams,
   });
+
   return (
     <>
       <div className="w-full">
-        <div className="px-6 pt-6  md:mb-0 block"> {/*removed md:hidden, revert if magkaissue sa search input */}
+        <div className="px-6 pt-6 md:mb-0 block">
           <SearchInput />
         </div>
         <div className="p-6 space-y-4 text-gray-600">
           <Categories items={categories} />
-          <CoursesList items={courses} />
+          <CoursesList items={courses} enrolled={false} />
         </div>
       </div>
     </>

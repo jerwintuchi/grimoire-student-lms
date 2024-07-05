@@ -51,7 +51,7 @@ export async function POST(req: Request) {
             enroll: true
         }
     })
-
+    
     return new Response(JSON.stringify(enrollment), { status: 200 });
   } catch (error) {
     console.log("[ENROLL]: ", error);

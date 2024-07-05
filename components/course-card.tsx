@@ -5,6 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { IconBadge } from "@/components/ui/icon-badge";
 import { BookOpenText } from "lucide-react";
+import { CourseProgress } from "./course-progress";
+import { db } from "@/lib/db";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import { checkEnrolled } from "@/lib/checkEnrolled";
 
 interface CourseCardProps {
   id: string;
@@ -14,6 +19,7 @@ interface CourseCardProps {
   tier: string;
   progress: number | null;
   category: string | null;
+  enrolled: boolean
 }
 
 const getTierStyles = (tier: string) => {
@@ -57,8 +63,30 @@ export const CourseCard = ({
   tier,
   progress,
   category,
+  enrolled,
 }: CourseCardProps) => {
   const { borderColor, titleColor, badgeColor, hoverColor } = getTierStyles(tier);
+  // const { userId } = auth();
+  // if (!userId) return redirect("/");
+
+  // const course = await db.course.findUnique({
+  //   where: {
+  //     id,
+  //   },
+  //   include: {
+  //     chapters: true,
+  //   },
+  // })
+
+  // const enrolled = await db.enrollment.findUnique({
+  //   where: {
+  //     userId_courseId: {
+  //       userId,
+  //       courseId: course?.id!,
+  //     },
+  //   },
+  // })
+// const userEnrolled = await checkEnrolled(id);
 
   return (
     <Link href={`/courses/${id}`}>
@@ -122,8 +150,11 @@ export const CourseCard = ({
               </div>
             </div>
             <div>
-              {progress !== null ? (
-                <div>TODO: PROGRESS COMPONENT</div>
+              {progress !== null && enrolled ? (
+                <CourseProgress 
+                variant={progress === 100 ? "success" : "default"}
+                size="sm" 
+                value={progress}/>  
               ) : (
                 <p className="text-[#f3e66e]">For {tier} tier users</p>
               )}

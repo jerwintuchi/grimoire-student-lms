@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { Chapter, Course, UserProgress } from "@prisma/client";
 import { redirect } from "next/navigation";
 import CourseSidebarItem from "./course-sidebar-item";
+import { CourseProgress } from "@/components/course-progress";
 
 interface CourseSidebarProps {
   course: Course & {
@@ -25,20 +26,26 @@ const CourseSidebar = async ({ course, progressCount }: CourseSidebarProps) => {
   //     },
   //   },
   // });
-  const enrolled = await db.course.findUnique({
-    where: {
-      id: userId,
-      enroll: true,
-    }
+ 
 
-    
+  const enrolled = await db.enrollment.findUnique({
+    where: {
+      userId_courseId: {
+        userId,
+        courseId: course.id,
+      },
+    },
   })
 
   return (
     <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm border border-[#13111c]">
       <div className="p-8 flex flex-col">
         <h1 className="text-lg font-bold text-black">{course.title}</h1>
-        {/* TODO: CHECK PURCHASE AND ADD PROGRESS */}
+        { enrolled && (
+          <div className="mt-10">
+            <CourseProgress variant="success" value={progressCount} />
+          </div>
+        )}
       </div>
       <div className="flex flex-col w-full">
         {course.chapters.map((chapter) => (

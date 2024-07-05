@@ -1,5 +1,3 @@
-import { NextResponse } from "next/server";
-import { isTeacher } from "./lib/teacher";
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 export default clerkMiddleware(
