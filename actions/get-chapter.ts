@@ -91,7 +91,7 @@ const getChapter = async ({ userId, courseId, chapterId }: GetChapterProps) => {
       attachments: [],
       nextChatper: null,
       userProgress: null,
-      purchase: null,
+      // purchase: null,
     };
   }
 };

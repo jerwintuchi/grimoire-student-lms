@@ -23,7 +23,6 @@ export const CourseProgressButton = ({
   nextChapterId
 }: CourseProgressButtonProps) => {
   const router = useRouter();
-
   const [isLoading, setIsLoading] = useState(false);
 
   const onClick = async () => {
@@ -35,7 +34,7 @@ export const CourseProgressButton = ({
       });
 
       if (!isCompleted && !nextChapterId) {
-        router.push(`/courses/${courseId}/chapters/${chapterId}`);
+        toast.success("Course Mastered");
       }
 
       if (!isCompleted && nextChapterId) {
@@ -61,7 +60,7 @@ export const CourseProgressButton = ({
       variant={isCompleted ? "outline" : "success"}
       className="w-full md:w-auto"
     >
-      {isCompleted ? "Not completed" : "Mark as complete"}
+      {isCompleted ? "Mark as unmastereed" : "Chapter Mastered"}
       <Icon className="h-4 w-4 ml-2" />
     </Button>
   )

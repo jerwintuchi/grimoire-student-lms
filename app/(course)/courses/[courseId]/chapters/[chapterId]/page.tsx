@@ -5,7 +5,7 @@ import getChapter from "@/actions/get-chapter";
 import Banner from "@/components/banner";
 import VideoPlayer from "./_components/video-player";
 import CourseEnrollButton from "./_components/course-enroll-button";
-import { formatPrice } from "@/lib/format";
+
 import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/preview";
 import { File } from "lucide-react";
@@ -27,7 +27,6 @@ const ChapterIdPage = async ({
     attachments,
     nextChapter,
     userProgress,
-    purchase,
   } = await getChapter({
     userId,
     chapterId: params.chapterId,
@@ -56,8 +55,8 @@ const ChapterIdPage = async ({
   
 
   const isLocked = !chapter.isFree && !course.enrollments?.some((enrollment) => String(enrollment.userId) === userId); // from !purchase
-  const completeOnEnd = !!course.enroll && !userProgress?.isCompleted; // from !!purchase
-  const freeUser = chapter.isFree && !purchase;
+  const completeOnEnd = !!isEnrolled && !userProgress?.isCompleted; // from !!purchase
+  const freeUser = chapter.isFree && !isEnrolled; //from !purchase
 
   return (
     <div>
@@ -91,10 +90,10 @@ const ChapterIdPage = async ({
             {isEnrolled ? (
               <div>
                 <CourseProgressButton
-                  chapterId={params.chapterId}
-                  courseId={params.courseId}
-                  nextChapterId={nextChapter?.id}
-                  isCompleted={!!userProgress?.isCompleted}/>
+                 chapterId={params.chapterId}
+                 courseId={params.courseId}
+                 nextChapterId={nextChapter?.id}
+                 isCompleted={!!userProgress?.isCompleted}/>
               </div>
             ) : (
               <CourseEnrollButton
