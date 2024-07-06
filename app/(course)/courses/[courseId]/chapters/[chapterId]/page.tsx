@@ -11,6 +11,7 @@ import { Preview } from "@/components/preview";
 import { File } from "lucide-react";
 import { db } from "@/lib/db";
 import { CourseProgressButton } from "./_components/course-progress-button";
+import CourseUnenrollButton from "./_components/course-unenroll-button";
 const ChapterIdPage = async ({
   params,
 }: {
@@ -88,12 +89,21 @@ const ChapterIdPage = async ({
               {chapter.title}
             </h2>
             {isEnrolled ? (
+              <div className="flex flex-row items-center gap-4">
               <div>
                 <CourseProgressButton
                  chapterId={params.chapterId}
                  courseId={params.courseId}
                  nextChapterId={nextChapter?.id}
                  isCompleted={!!userProgress?.isCompleted}/>
+              </div>
+              <div>
+              <CourseUnenrollButton 
+                courseId={params.courseId}
+                tier={course?.tier?.id!}
+                userId={userId}
+                isEnrolled={isEnrolled}/>
+              </div>
               </div>
             ) : (
               <CourseEnrollButton
