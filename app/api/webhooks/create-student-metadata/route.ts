@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 import { clerkClient, currentUser } from "@clerk/nextjs/server";
 
 const prisma = new PrismaClient();
-const webhookSecret = process.env.STUDENT_WEBHOOK_METADATA || "";
+const webhookSecret = process.env.STUDENT_PROD_WEBHOOK_METADATA || "";
 
 async function handler(request: Request) {
   const payload = await request.json();
