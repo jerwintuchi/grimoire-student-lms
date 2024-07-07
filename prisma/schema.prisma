@@ -50,6 +50,8 @@ model Course {
   tierId String?
   tier   Tier?   @relation(fields: [tierId], references: [id])
 
+  quizzes Quiz[]
+
   chapters    Chapter[]
   attachments Attachment[]
 
@@ -105,8 +107,6 @@ model Chapter {
 
   muxData MuxData?
 
-  quiz Quiz?
-
   courseId String
   course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
@@ -121,12 +121,14 @@ model Chapter {
 model Quiz {
   id        String     @id @default(uuid())
   title     String
-  chapterId String     @unique
-  chapter   Chapter    @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  courseId  String
+  course    Course     @relation(fields: [courseId], references: [id], onDelete: Cascade)
   questions Question[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+
+  @@index([courseId])
 }
 
 model Question {
