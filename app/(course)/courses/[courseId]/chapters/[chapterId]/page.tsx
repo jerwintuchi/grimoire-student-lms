@@ -13,6 +13,7 @@ import { db } from "@/lib/db";
 import { CourseProgressButton } from "./_components/course-progress-button";
 import CourseUnenrollButton from "./_components/course-unenroll-button";
 import { Card, CardDescription, CardHeader } from "@/components/ui/card";
+
 const ChapterIdPage = async ({
   params,
 }: {
@@ -22,6 +23,7 @@ const ChapterIdPage = async ({
   if (!userId) {
     return redirect("/");
   }
+
   const {
     chapter,
     course,
@@ -38,47 +40,34 @@ const ChapterIdPage = async ({
   if (!chapter || !course) {
     return redirect("/");
   }
-  
 
-  // if(!course.enroll ){
-  //   return redirect("/subscription")
-  // }
-  
-  if (course) {
-    const tierId = course?.tier?.id;
-  }
-
-  //get course publisher and details
   const courseDetails = await db.course.findUnique({
-    where: {
-      id: params.courseId,
-    },
+    where: { id: params.courseId },
     select: {
       userId: true, // course publisher
       title: true,
       description: true,
-    }
-  })
-  const coursePublisher = courseDetails?.userId
-
-  //get username from publisher
+    },
+  });
+  
+  //get the username of the course publisher from clerkAttributes { attributes }
   const courseOwner = await db.user.findUnique({
     where: {
-      clerkId: coursePublisher
+      clerkId: courseDetails?.userId,
     },
     select: {
-      clerkAttributes: true
-    }
-  })
-
-  if(!courseOwner){
+      clerkAttributes: true,
+    },
+  });
+  
+  if (!courseDetails || !courseOwner) {
     return redirect("/");
   }
+  
+  const { username } = (courseOwner!.clerkAttributes as { attributes: { username: string } }).attributes || {};
+  
 
-
-  if(!courseDetails){
-    return redirect("/");
-  }
+ 
 
 
   const enroll = await db.enrollment.findFirst({
@@ -88,11 +77,9 @@ const ChapterIdPage = async ({
     },
   });
   const isEnrolled = userId === enroll?.userId;
-
-
-  const isLocked = !chapter.isFree && !course.enrollments?.some((enrollment) => String(enrollment.userId) === userId); // from !purchase
-  const completeOnEnd = !!isEnrolled && !userProgress?.isCompleted; // from !!purchase
-  const freeUser = chapter.isFree && !isEnrolled; //from !purchase
+  const isLocked = !chapter.isFree && !course.enrollments?.some((enrollment) => String(enrollment.userId) === userId);
+  const completeOnEnd = !!isEnrolled && !userProgress?.isCompleted;
+  const freeUser = chapter.isFree && !isEnrolled;
 
   return (
     <div>
@@ -121,7 +108,7 @@ const ChapterIdPage = async ({
             />) : (
               <Card className="p-4">
                 <CardHeader>
-                  {/* Publisher: {courseOwner.clerkAttributes.publicMetadata.username} */}
+                  Publisher: {username}
                 </CardHeader>
                 <CardDescription>
                   
@@ -164,24 +151,28 @@ const ChapterIdPage = async ({
             )}
           </div>
           <Separator className="mb-4 bg-gray-600" />
-          <div>
-            <Preview value={chapter.description!} />
-          </div>
-          {!!attachments?.length && (
+          {isEnrolled && (
             <>
-              <Separator />
-              <div className="p-4">
-                {attachments?.map((attachment) => (
-                  <a
-                    href={attachment.url}
-                    target="_blank"
-                    key={attachment.id}
-                    className="flex items-center p-3 w-full bg-gray-500 hover:bg-gray-600 border rounded-md hover:underline">
-                    <File />
-                    <p className="line-clamp-1">{attachment.name}</p>
-                  </a>
-                ))}
+              <div>
+                <Preview value={chapter.description!} />
               </div>
+              {!!attachments?.length && (
+                <>
+                  <Separator />
+                  <div className="p-4">
+                    {attachments?.map((attachment) => (
+                      <a
+                        href={attachment.url}
+                        target="_blank"
+                        key={attachment.id}
+                        className="flex items-center p-3 w-full bg-gray-500 hover:bg-gray-600 border rounded-md hover:underline">
+                        <File />
+                        <p className="line-clamp-1">{attachment.name}</p>
+                      </a>
+                    ))}
+                  </div>
+                </>
+              )}
             </>
           )}
         </div>
