@@ -90,7 +90,7 @@ async function handler(request: Request) {
     });
 
     return NextResponse.json(
-      { message: "User is now teacher" },
+      { message: "User is now student" },
       { status: 200 }
     );
   } else if (eventType === "user.deleted") {

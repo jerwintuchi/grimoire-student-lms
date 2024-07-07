@@ -25,7 +25,7 @@ const SubscriptionPage = async () => {
     const tiers = await db.tier.findMany();
   
     // Determine the current tier of the user
-    let currentTier = "free"; // Default to free tier if not found
+    let currentTier = "Free"; // Default to free tier if not found
     if (usertier && usertier.tierId) {
       currentTier = usertier.tierId; // Assuming tierId is either "free", "academic", or "magister"
     }
