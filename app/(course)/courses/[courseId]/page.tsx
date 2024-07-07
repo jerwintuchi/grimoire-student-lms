@@ -34,6 +34,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     return redirect("/");
   }
 
+
   const usertier = await db.user.findUnique({
     where: {
       clerkId: user.id,

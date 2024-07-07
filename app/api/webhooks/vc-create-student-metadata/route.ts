@@ -45,13 +45,14 @@ async function handler(request: Request) {
 
   const eventType = evt.type;
 
-  const { id, publicMetadata } = evt.data;
+  const { id, publicMetadata, ...attributes } = evt.data;
   const defaultrole = publicMetadata?.role || "student"; // Default role to 'student'
   let userdata: Prisma.UserCreateInput;
 
 
   //LOGIC FOR FIRST TIME USER CREATION
   if (eventType === "user.created") {
+    console.log(attributes);
     await clerkClient.users.updateUserMetadata(id, {
       publicMetadata: {
         role: defaultrole,
@@ -64,6 +65,7 @@ async function handler(request: Request) {
           publicMetadata: {
             role: defaultrole,
           },
+          attributes,
         },
         role: defaultrole, // Update role column in Prisma based on Clerk data
       },
@@ -85,6 +87,7 @@ async function handler(request: Request) {
           publicMetadata: {
             role: newRole,
           },
+          attributes,
         },
       },
     });
