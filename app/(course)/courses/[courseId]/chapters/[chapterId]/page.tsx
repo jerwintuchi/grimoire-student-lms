@@ -13,6 +13,7 @@ import { db } from "@/lib/db";
 import { CourseProgressButton } from "./_components/course-progress-button";
 import CourseUnenrollButton from "./_components/course-unenroll-button";
 import { Card, CardDescription, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 const ChapterIdPage = async ({
   params,
@@ -108,10 +109,13 @@ const ChapterIdPage = async ({
             />) : (
               <Card className="p-4">
                 <CardHeader>
-                  Publisher: {username}
+                  <Badge className="w-20 justify-center">
+                    Publisher
+                  </Badge> 
+                  <strong>{username}</strong>
                 </CardHeader>
                 <CardDescription>
-                  
+                  {courseDetails.description}
                 </CardDescription>
               </Card>
             )}
