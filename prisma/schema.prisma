@@ -180,7 +180,6 @@ model StripeCustomer {
 
 model Tier {
   id          String @id @default(uuid())
-  name        String @unique
   description String
   price       Float // The price for this tier
 

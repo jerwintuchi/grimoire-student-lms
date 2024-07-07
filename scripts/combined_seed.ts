@@ -31,22 +31,22 @@ async function seedTiers() {
   const tiers = [
     {
       id: "Free",
-      name: "free",
-      description: "For mages who don't want to pay. Access to basic spells and limited community access.",
-      price: 0
+      description:
+        "For mages who don't want to pay. Access to basic spells and limited community access.",
+      price: 0,
     },
     {
       id: "Academic",
-      name: "academic",
-      description: "For dedicated learners. Gain access to advanced spells, extensive access to the spell library, monthly apprenticeships, and full community access.",
-      price: 35
+      description:
+        "For dedicated learners. Gain access to advanced spells, extensive access to the spell library, monthly apprenticeships, and full community access.",
+      price: 35,
     },
     {
       id: "Magister",
-      name: "magister",
-      description: "For mages who seek mastery. Unlock all spells, unlimited access to the spell library, weekly apprenticeships, VIP community access, and the ability to earn runes for rank.",
-      price: 100
-    }
+      description:
+        "For mages who seek mastery. Unlock all spells, unlimited access to the spell library, weekly apprenticeships, VIP community access, and the ability to earn runes for rank.",
+      price: 100,
+    },
   ];
 
   try {
@@ -56,7 +56,6 @@ async function seedTiers() {
         update: {},
         create: {
           id: tier.id,
-          name: tier.name,
           description: tier.description,
           price: tier.price,
         },
