@@ -53,7 +53,7 @@ const getChapter = async ({ userId, courseId, chapterId }: GetChapterProps) => {
       });
   
 
-    if (chapter.isFree || enrollment ) { // TODO : CONVERT
+    if (chapter.isFree || enrollment ) { 
       muxData = await db.muxData.findUnique({
         where: {
           chapterId: chapterId,
