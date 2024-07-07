@@ -49,7 +49,7 @@ async function handler(request: Request) {
   const defaultrole = publicMetadata?.role || "student"; // Default role to 'student'
   let userdata: Prisma.UserCreateInput;
 
-  const user = await currentUser();
+
   //LOGIC FOR FIRST TIME USER CREATION
   if (eventType === "user.created") {
     await clerkClient.users.updateUserMetadata(id, {
@@ -65,7 +65,7 @@ async function handler(request: Request) {
             role: defaultrole,
           },
         },
-        role: defaultrole, // Add this line
+        role: defaultrole, // Update role column in Prisma based on Clerk data
       },
     });
     return NextResponse.json(
@@ -80,10 +80,10 @@ async function handler(request: Request) {
     await prisma.user.update({
       where: { clerkId: evt.data.id },
       data: {
-        role: defaultrole, // Update role column in Prisma based on Clerk data
+        role: newRole, // Update role column in Prisma based on Clerk data
         clerkAttributes: {
           publicMetadata: {
-            role: defaultrole,
+            role: newRole,
           },
         },
       },
