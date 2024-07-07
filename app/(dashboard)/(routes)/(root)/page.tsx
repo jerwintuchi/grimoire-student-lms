@@ -7,7 +7,7 @@ import { BookCheck, BookDashed } from "lucide-react";
 import { redirect } from "next/navigation";
 import { InfoCard } from "./_components/info-card";
 
-export default async function Dashboard(role: Roles) {
+export default async function Dashboard() {
   const { userId } = auth();
   if(!userId){
     return redirect("/");

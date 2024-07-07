@@ -10,7 +10,7 @@ const AboutPage = () => {
       <MainNav />
 
       <section className="hero flex flex-col justify-center items-center h-screen">
-        <img
+        <Image
           src="/book-open.svg"
           alt="Book Icon"
           className="book-image justify-center h-20 w-20 pb-5"
