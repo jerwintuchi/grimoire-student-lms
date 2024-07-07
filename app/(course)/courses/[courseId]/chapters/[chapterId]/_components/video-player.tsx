@@ -1,15 +1,9 @@
 "use client";
 
-import axios from "axios";
-import Muxplayer from "@mux/mux-player-react";
-import { useState } from "react";
-import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { Loader2, Lock, VideoOff } from "lucide-react";
-
-import { cn } from "@/lib/utils";
-import LoadingCircles from "@/components/loading-circles";
 import MuxPlayer from "@mux/mux-player-react";
+import { useState } from "react";
+import LoadingCircles from "@/components/loading-circles";
+import { Lock } from "lucide-react";
 
 interface VideoPlayerProps {
   playbackId: string;
@@ -19,6 +13,7 @@ interface VideoPlayerProps {
   isLocked?: boolean;
   completeOnEnd?: boolean;
   title: string;
+  isEnrolled?: boolean;
 }
 
 const VideoPlayer = ({
@@ -29,8 +24,10 @@ const VideoPlayer = ({
   isLocked,
   completeOnEnd,
   title,
+  isEnrolled,
 }: VideoPlayerProps) => {
   const [isReady, setIsReady] = useState(false);
+
   return (
     <div className="relative aspect-video">
       {!isReady && !isLocked && (
@@ -44,14 +41,13 @@ const VideoPlayer = ({
           <p className="text-sm">This chapter is locked</p>
         </div>
       )}
-      {!isLocked && (
+      {!isLocked && isEnrolled && (
         <MuxPlayer
           title={title}
-          className={cn(!isReady && "hidden")}
+          className={isReady ? "" : "hidden"}
           onCanPlay={() => setIsReady(true)}
-          onEnded={() => {}}
-          autoPlay
           playbackId={playbackId}
+          autoPlay
         />
       )}
     </div>

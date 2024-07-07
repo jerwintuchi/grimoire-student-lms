@@ -32,6 +32,7 @@ const ChapterIdPage = async ({
     attachments,
     nextChapter,
     userProgress,
+    enrollment
   } = await getChapter({
     userId,
     chapterId: params.chapterId,
@@ -45,13 +46,12 @@ const ChapterIdPage = async ({
   const courseDetails = await db.course.findUnique({
     where: { id: params.courseId },
     select: {
-      userId: true, // course publisher
+      userId: true,
       title: true,
       description: true,
     },
   });
-  
-  //get the username of the course publisher from clerkAttributes { attributes }
+
   const courseOwner = await db.user.findUnique({
     where: {
       clerkId: courseDetails?.userId,
@@ -60,16 +60,12 @@ const ChapterIdPage = async ({
       clerkAttributes: true,
     },
   });
-  
+
   if (!courseDetails || !courseOwner) {
     return redirect("/");
   }
-  
+
   const { username } = (courseOwner!.clerkAttributes as { attributes: { username: string } }).attributes || {};
-  
-
- 
-
 
   const enroll = await db.enrollment.findFirst({
     where: {
@@ -77,10 +73,15 @@ const ChapterIdPage = async ({
       courseId: params.courseId,
     },
   });
-  const isEnrolled = userId === enroll?.userId;
-  const isLocked = !chapter.isFree && !course.enrollments?.some((enrollment) => String(enrollment.userId) === userId);
-  const completeOnEnd = !!isEnrolled && !userProgress?.isCompleted;
-  const freeUser = chapter.isFree && !isEnrolled;
+  const isEnrolled = !!enroll;
+  const isLocked = !chapter.isFree && !enrollment;
+  const completeOnEnd = !!enrollment && !userProgress?.isCompleted;
+
+  // Debugging logs
+  console.log('userId:', userId);
+  console.log('isEnrolled:', isEnrolled);
+  console.log('isLocked:', isLocked);
+  console.log('completeOnEnd:', completeOnEnd);
 
   return (
     <div>
@@ -96,9 +97,8 @@ const ChapterIdPage = async ({
       )}
       <div className="flex flex-col max-w-4xl mx-auto pb-20">
         <div className="p-4">
-          {
-            isEnrolled && !isLocked ? (  
-              <VideoPlayer
+          {enrollment ? (
+            <VideoPlayer
               chapterId={params.chapterId}
               title={chapter.title}
               courseId={params.courseId}
@@ -106,56 +106,57 @@ const ChapterIdPage = async ({
               playbackId={muxData?.playbackId!}
               isLocked={isLocked}
               completeOnEnd={completeOnEnd}
-            />) : (
-              <Card className="p-4">
-                <CardHeader>
-                  <Badge className="w-20 justify-center">
-                    Publisher
-                  </Badge> 
-                  <strong>{username}</strong>
-                </CardHeader>
-                <CardDescription>
-                  {courseDetails.description}
-                </CardDescription>
-              </Card>
-            )}
+              isEnrolled={isEnrolled}
+            />
+          ) : (
+            <Card className="p-4">
+              <CardHeader>
+                <Badge className="w-20 justify-center">
+                  Publisher
+                </Badge>
+                <strong>{username}</strong>
+              </CardHeader>
+              <CardDescription>
+                {courseDetails.description}
+              </CardDescription>
+            </Card>
+          )}
         </div>
         <div>
           <div className="p-4 flex flex-col md:flex-row items-center">
-            <h2 className="text-2xl font-semibold mb-2 text-gray-600 mr-4 ">
+            <h2 className="text-2xl font-semibold mb-2 text-gray-600 mr-4">
               {chapter.title}
             </h2>
-            {isEnrolled ? (
+            {enrollment ? (
               <div className="flex flex-row items-center gap-4">
-              <div>
-                <CourseProgressButton
-                 chapterId={params.chapterId}
-                 courseId={params.courseId}
-                 nextChapterId={nextChapter?.id}
-                 isCompleted={!!userProgress?.isCompleted}/>
-              </div>
-              <div>
-              <CourseUnenrollButton 
-                courseId={params.courseId}
-                tier={course?.tier?.id!}
-                userId={userId}
-                isEnrolled={isEnrolled}/>
-              </div>
+                <div>
+                  <CourseProgressButton
+                    chapterId={params.chapterId}
+                    courseId={params.courseId}
+                    nextChapterId={nextChapter?.id}
+                    isCompleted={!!userProgress?.isCompleted}
+                  />
+                </div>
+                <div>
+                  <CourseUnenrollButton
+                    courseId={params.courseId}
+                    tier={course?.tier?.id!}
+                    userId={userId}
+                    isEnrolled={isEnrolled}
+                  />
+                </div>
               </div>
             ) : (
-            <>
-            <CourseEnrollButton
+              <CourseEnrollButton
                 courseId={params.courseId}
                 tier={course?.tier?.id!}
                 userId={userId}
                 isEnrolled={isEnrolled}
               />
-            </>
-              
             )}
           </div>
           <Separator className="mb-4 bg-gray-600" />
-          {isEnrolled && (
+          {(enrollment || chapter.isFree) && (
             <>
               <div>
                 <Preview value={chapter.description!} />
@@ -164,12 +165,13 @@ const ChapterIdPage = async ({
                 <>
                   <Separator />
                   <div className="p-4">
-                    {attachments?.map((attachment) => (
+                    {attachments.map((attachment) => (
                       <a
                         href={attachment.url}
                         target="_blank"
                         key={attachment.id}
-                        className="flex items-center p-3 w-full bg-gray-500 hover:bg-gray-600 border rounded-md hover:underline">
+                        className="flex items-center p-3 w-full bg-gray-500 hover:bg-gray-600 border rounded-md hover:underline"
+                      >
                         <File />
                         <p className="line-clamp-1">{attachment.name}</p>
                       </a>

@@ -10,6 +10,15 @@ interface GetChapterProps {
 const getChapter = async ({ userId, courseId, chapterId }: GetChapterProps) => {
   try {
 
+    const enrollment = await db.enrollment.findUnique({
+      where: {
+        userId_courseId: {
+          userId,
+          courseId,
+        },
+      },
+    })
+
     const course = await db.course.findUnique({
       where: {
         isPublished: true,
@@ -44,7 +53,7 @@ const getChapter = async ({ userId, courseId, chapterId }: GetChapterProps) => {
       });
   
 
-    if (chapter.isFree ) { // TODO : CONVERT
+    if (chapter.isFree || enrollment ) { // TODO : CONVERT
       muxData = await db.muxData.findUnique({
         where: {
           chapterId: chapterId,
@@ -81,6 +90,7 @@ const getChapter = async ({ userId, courseId, chapterId }: GetChapterProps) => {
       attachments,
       nextChapter,
       userProgress,
+      enrollment
     };
   } catch (error) {
     console.log("[GET_CHAPTER]: ", error);
@@ -91,7 +101,7 @@ const getChapter = async ({ userId, courseId, chapterId }: GetChapterProps) => {
       attachments: [],
       nextChatper: null,
       userProgress: null,
-      // purchase: null,
+      enrollment: null,
     };
   }
 };
