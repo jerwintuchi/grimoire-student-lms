@@ -12,7 +12,7 @@ import {
 
 const MainNav = () => {
   return (
-    <nav className="bg-transparent backdrop-filter backdrop-blur-sm text-black p-2 sticky top-0 z-50">
+    <nav className="bg-transparent backdrop-filter backdrop-blur-sm text-white p-2 sticky top-0 z-50">
       <div className="flex justify-start">
         <Link href="/landing">
           <Button variant="ghost" className="hover:bg-red-600 ">
