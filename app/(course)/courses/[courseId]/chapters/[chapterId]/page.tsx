@@ -12,7 +12,7 @@ import { File } from "lucide-react";
 import { db } from "@/lib/db";
 import { CourseProgressButton } from "./_components/course-progress-button";
 import CourseUnenrollButton from "./_components/course-unenroll-button";
-import { Card, CardDescription, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 const ChapterIdPage = async ({
@@ -161,6 +161,20 @@ const ChapterIdPage = async ({
               <div>
                 <Preview value={chapter.description!} />
               </div>
+              <Card className="p-4">
+                <CardHeader>
+                  <h3 className="text-xl font-semibold">Quiz</h3>
+                </CardHeader>
+                <CardContent>
+                  Sample Quiz Content for {chapter.title}
+                </CardContent>
+                <CardDescription>
+                  Question 1: Sample Question?
+                  <br />
+                  Options: Sample Answer 1, Sample Answer 2, Sample Answer 3, Sample Answer 4
+                  <br />
+                </CardDescription>
+              </Card>
               {!!attachments?.length && (
                 <>
                   <Separator />
