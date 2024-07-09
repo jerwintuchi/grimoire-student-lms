@@ -309,6 +309,17 @@ body {
   display: none; /* For the view account */
 }
 
+/*----------OTP---FIELDS------------*/
+.cl-otpCodeFieldInput {
+  color: #ffffff;
+}
+/*----------Didn't receive a code?------------*/
+.cl-internal-q2718p {
+  color: rgb(222, 218, 218);
+}
+
+
+
  /*----------------------------spinner------------------------------*/
  .spinner {
   margin:auto 0;
