@@ -50,6 +50,7 @@
     "react-icons": "^5.2.1",
     "react-quill": "^0.0.2",
     "stripe": "^16.1.0",
+    "style-loader": "^4.0.0",
     "svix": "^1.24.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",

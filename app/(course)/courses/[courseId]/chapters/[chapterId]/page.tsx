@@ -7,7 +7,7 @@ import VideoPlayer from "./_components/video-player";
 import CourseEnrollButton from "./_components/course-enroll-button";
 
 import { Separator } from "@/components/ui/separator";
-import { Preview } from "@/components/preview";
+import Preview from "@/components/preview";
 import { File } from "lucide-react";
 import { db } from "@/lib/db";
 import { CourseProgressButton } from "./_components/course-progress-button";
